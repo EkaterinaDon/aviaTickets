@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C458CDE225F500D2004D9A5A /* PlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C458CDE125F500D2004D9A5A /* PlaceViewController.m */; };
+		C458CDE925F508E2004D9A5A /* PlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C458CDE825F508E2004D9A5A /* PlaceCell.m */; };
 		C45927EA25EFD54600CFE731 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C45927E925EFD54600CFE731 /* AppDelegate.m */; };
 		C45927F025EFD54600CFE731 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C45927EF25EFD54600CFE731 /* ViewController.m */; };
 		C45927F625EFD54600CFE731 /* aviaTickets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C45927F425EFD54600CFE731 /* aviaTickets.xcdatamodeld */; };
@@ -24,6 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C458CDE025F500D2004D9A5A /* PlaceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceViewController.h; sourceTree = "<group>"; };
+		C458CDE125F500D2004D9A5A /* PlaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceViewController.m; sourceTree = "<group>"; };
+		C458CDE425F50350004D9A5A /* SearchRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchRequest.h; sourceTree = "<group>"; };
+		C458CDE725F508E2004D9A5A /* PlaceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceCell.h; sourceTree = "<group>"; };
+		C458CDE825F508E2004D9A5A /* PlaceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceCell.m; sourceTree = "<group>"; };
 		C45927E525EFD54600CFE731 /* aviaTickets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aviaTickets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C45927E825EFD54600CFE731 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C45927E925EFD54600CFE731 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -60,6 +67,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C458CDE625F5086E004D9A5A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C458CDE725F508E2004D9A5A /* PlaceCell.h */,
+				C458CDE825F508E2004D9A5A /* PlaceCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		C458CDEB25F50D1B004D9A5A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C45927E825EFD54600CFE731 /* AppDelegate.h */,
+				C45927E925EFD54600CFE731 /* AppDelegate.m */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		C45927DC25EFD54600CFE731 = {
 			isa = PBXGroup;
 			children = (
@@ -79,12 +104,11 @@
 		C45927E725EFD54600CFE731 /* aviaTickets */ = {
 			isa = PBXGroup;
 			children = (
-				C45927E825EFD54600CFE731 /* AppDelegate.h */,
-				C45927E925EFD54600CFE731 /* AppDelegate.m */,
+				C458CDE625F5086E004D9A5A /* Cells */,
+				C458CDEB25F50D1B004D9A5A /* App */,
 				C459281A25F006FE00CFE731 /* Services */,
 				C459280D25F004F600CFE731 /* Models */,
 				C459280725EFFD2F00CFE731 /* Controllers */,
-				C45927F725EFD54800CFE731 /* Assets.xcassets */,
 				C459282725F00AD900CFE731 /* Resourses */,
 				C45927F925EFD54800CFE731 /* LaunchScreen.storyboard */,
 				C45927FC25EFD54800CFE731 /* Info.plist */,
@@ -101,6 +125,8 @@
 				C45927EF25EFD54600CFE731 /* ViewController.m */,
 				C459280825EFFD6300CFE731 /* TicketsViewController.h */,
 				C459280925EFFD6300CFE731 /* TicketsViewController.m */,
+				C458CDE025F500D2004D9A5A /* PlaceViewController.h */,
+				C458CDE125F500D2004D9A5A /* PlaceViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -122,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				C459281B25F0072100CFE731 /* DataManager.h */,
+				C458CDE425F50350004D9A5A /* SearchRequest.h */,
 				C459281C25F0072100CFE731 /* DataManager.m */,
 			);
 			path = Services;
@@ -130,6 +157,7 @@
 		C459282725F00AD900CFE731 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				C45927F725EFD54800CFE731 /* Assets.xcassets */,
 				C459282225F00A6100CFE731 /* countries.json */,
 				C459282125F00A6100CFE731 /* airports.json */,
 				C459282025F00A6100CFE731 /* cities.json */,
@@ -210,6 +238,8 @@
 			files = (
 				C45927FE25EFD54800CFE731 /* main.m in Sources */,
 				C459280A25EFFD6300CFE731 /* TicketsViewController.m in Sources */,
+				C458CDE925F508E2004D9A5A /* PlaceCell.m in Sources */,
+				C458CDE225F500D2004D9A5A /* PlaceViewController.m in Sources */,
 				C45927F625EFD54600CFE731 /* aviaTickets.xcdatamodeld in Sources */,
 				C45927F025EFD54600CFE731 /* ViewController.m in Sources */,
 				C459281025F0051700CFE731 /* Country.m in Sources */,
