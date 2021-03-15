@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) UIBarButtonItem *feedsButton;
 
+@property (nonatomic, strong) UIButton *mapButton;
 
 @property (nonatomic) SearchRequest searchRequest;
 
@@ -91,6 +92,16 @@
     self.searchButton.titleLabel.font = [UIFont systemFontOfSize:20.0 weight:UIFontWeightBold];
     [self.searchButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.searchButton];
+    
+    self.mapButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [self.mapButton setTitle:@"Найти на карте" forState:UIControlStateNormal];
+    self.mapButton.tintColor = [UIColor whiteColor];
+    self.mapButton.frame = CGRectMake(30.0, CGRectGetMaxY(self.searchButton.frame) + 30, [UIScreen mainScreen].bounds.size.width - 60.0, 60.0);
+    self.mapButton.backgroundColor = [UIColor blackColor];
+    self.mapButton.layer.cornerRadius = 8.0;
+    self.mapButton.titleLabel.font = [UIFont systemFontOfSize:20.0 weight:UIFontWeightBold];
+    [self.mapButton addTarget:self action:@selector(mapButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.mapButton];
         
     self.feedsButton = [[UIBarButtonItem alloc]
                     initWithTitle: @"Новости"
@@ -127,6 +138,11 @@
             [self presentViewController:alertController animated:YES completion:nil];
         }
     }];
+}
+
+-(void)mapButtonDidTap:(UIButton *)sender {
+    MapViewController *mapViewController = [MapViewController new];
+    [self.navigationController showViewController:mapViewController sender:self];
 }
 
 - (void)feedsButtonDidTap:(UIButton *)sender {

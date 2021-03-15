@@ -12,10 +12,10 @@
 #import "SearchRequest.h"
 #import "APIManager.h"
 #import "FeedsViewController.h"
+#import "MapViewController.h"
 
 @interface ViewController : UIViewController
 
-@property(nonatomic, strong) UIButton *buttonFind;
 
 @end
 
