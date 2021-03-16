@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "ViewController.h"
+#import "TabBarController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

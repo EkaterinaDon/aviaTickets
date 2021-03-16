@@ -19,11 +19,11 @@
     CGRect windowFrame = [[UIScreen mainScreen] bounds];
     self.window = [[UIWindow alloc] initWithFrame: windowFrame];
     
-    ViewController *viewController = [[ViewController alloc] init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: viewController];
+//    ViewController *viewController = [[ViewController alloc] init];
+//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: viewController];
+    TabBarController *tabBarController = [[TabBarController alloc] init];
     
-    
-    self.window.rootViewController = navigationController;
+    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
 }
