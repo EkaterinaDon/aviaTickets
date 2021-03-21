@@ -15,6 +15,9 @@
 @property (nonatomic, strong) City *origin;
 @property (nonatomic, strong) NSArray *prices;
 
+- (void)getMapPriceBy:(NSString *)title;
+- (void) showAddToFavoriteAlert:(MapPrice *) mapPrice;
+
 @end
 
 @implementation MapViewController
@@ -61,13 +64,6 @@
             [[APIManager sharedInstance] mapPricesFor:_origin withCompletion:^(NSArray *prices) {
                 self.prices = prices;
             }];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-                annotation.title = [NSString stringWithFormat:@"%@", self.origin.name];
-                annotation.subtitle = [NSString stringWithFormat:@"%@", self.origin.name];
-                annotation.coordinate = currentLocation.coordinate;
-                [self->_mapView addAnnotation: annotation];
-            });
         }
     }
 }
@@ -87,16 +83,45 @@
     }
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    static NSString *identifier = @"MarkerIdentifier";
-    MKMarkerAnnotationView *annotationView = (MKMarkerAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-    if (!annotationView) {
-        annotationView = [[MKMarkerAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-        annotationView.canShowCallout = YES;
-        annotationView.calloutOffset = CGPointMake(-5.0, 5.0);
-        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    [mapView deselectAnnotation:view.annotation animated:YES];
+    
+    if ([view.annotation isKindOfClass:[MKUserLocation class]]) {
+        return;
     }
-    annotationView.annotation = annotation;
-    return annotationView;
+    [self getMapPriceBy:view.annotation.title];
 }
+
+
+- (void)getMapPriceBy:(NSString *)title {
+    NSString *priceTitle = @"";
+    
+    for (MapPrice *price in self.prices) {
+        priceTitle = [NSString stringWithFormat:@"%@ (%@)", price.destination.name, price.destination.code];
+        if ([priceTitle isEqualToString:title]) {
+            [self showAddToFavoriteAlert:price];
+            break;
+        }
+    }
+}
+
+- (void) showAddToFavoriteAlert:(MapPrice *) mapPrice {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Действия с билетом" message:@"Что необходимо сделать с выбранным билетом?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *favoriteAction;
+    
+    if ([[CoreDataHelper sharedInstance] isFavoriteMapPrice:mapPrice]) {
+        favoriteAction = [UIAlertAction actionWithTitle:@"Удалить из избранного" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [[CoreDataHelper sharedInstance] removeFromFavoriteMapPrice:mapPrice];
+        }];
+    } else {
+        favoriteAction = [UIAlertAction actionWithTitle:@"Добавить в избранное" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[CoreDataHelper sharedInstance] addToFavoriteMapPrice:mapPrice];
+        }];
+    }
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Закрыть" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:favoriteAction];
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 @end
