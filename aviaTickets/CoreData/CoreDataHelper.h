@@ -26,6 +26,10 @@
 - (void)removeFromFavoriteMapPrice:(MapPrice *)mapPrice;
 - (NSArray *)favoriteMapPrices;
 
+@property (readonly, strong) NSPersistentContainer *persistentContainer;
+
+- (void)saveContext;
+
 @end
 
 

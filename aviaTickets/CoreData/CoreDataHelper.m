@@ -8,9 +8,7 @@
 #import "CoreDataHelper.h"
 
 @interface CoreDataHelper ()
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+
 @end
 
 
@@ -21,42 +19,60 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[CoreDataHelper alloc] init];
-        [instance setup];
     });
     return instance;
 }
 
-#pragma mark - FavoriteTicket
+#pragma mark - Core Data stack
 
-- (void)setup {
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DataModel" withExtension:@"momd"];
-    self.managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+@synthesize persistentContainer = _persistentContainer;
+
+- (NSPersistentContainer *)persistentContainer {
+    @synchronized (self) {
+        if (_persistentContainer == nil) {
+            _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"DataModel"];
+            [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
+                if (error != nil) {
+                    NSLog(@"Unresolved error %@, %@", error, error.userInfo);
+                    abort();
+                }
+            }];
+        }
+    }
     
-    NSURL *docsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    NSURL *storeURL = [docsURL URLByAppendingPathComponent:@"DataModel.sqlite"];
-    self.persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
-    
-    NSPersistentStore* store = [self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:nil];
-    if (!store) {
+    return _persistentContainer;
+}
+
+#pragma mark - Core Data Saving support
+
+- (void)saveContext {
+    NSManagedObjectContext *context = self.persistentContainer.viewContext;
+    NSError *error = nil;
+    if ([context hasChanges] && ![context save:&error]) {
+        
+        NSLog(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
-    
-    self.managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    self.managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator;
 }
 
-- (void)save {
-    NSError *error;
-    [self.managedObjectContext save: &error];
-    if (error) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
-}
+
+
+#pragma mark - FavoriteTicket
 
 - (FavoriteTicket *)favoriteFromTicket:(Ticket *)ticket {
+    NSError *error;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
-    request.predicate = [NSPredicate predicateWithFormat:@"price == %ld AND airline == %@ AND from == %@ AND to == %@ AND departure == %@ AND expires == %@ AND flightNumber == %ld", (long)ticket.price.integerValue, ticket.airline, ticket.from, ticket.to, ticket.departure, ticket.expires, (long)ticket.flightNumber.integerValue];
-    return [[self.managedObjectContext executeFetchRequest:request error:nil] firstObject];
+    
+    NSString *format = @"price == %ld AND airline == %@ AND from == %@ AND to == %@ AND departure == %@ AND expires == %@ AND flightNumber == %ld";
+    request.predicate = [NSPredicate predicateWithFormat:format, (long)ticket.price.integerValue, ticket.airline, ticket.from, ticket.to, ticket.departure, ticket.expires, (long)ticket.flightNumber.integerValue];
+    NSArray *tickets = [self.persistentContainer.viewContext executeFetchRequest:request error:&error];
+    
+    if (error) {
+        NSLog(@"Error: %@", error.localizedDescription);
+        return nil;
+    }
+    
+    return tickets.firstObject;
 }
 
 - (BOOL)isFavorite:(Ticket *)ticket {
@@ -64,7 +80,7 @@
 }
 
 - (void)addToFavorite:(Ticket *)ticket {
-    FavoriteTicket *favorite = [NSEntityDescription insertNewObjectForEntityForName:@"FavoriteTicket" inManagedObjectContext:self.managedObjectContext];
+    FavoriteTicket *favorite = [NSEntityDescription insertNewObjectForEntityForName:@"FavoriteTicket" inManagedObjectContext:self.persistentContainer.viewContext];
     favorite.price = ticket.price.intValue;
     favorite.airline = ticket.airline;
     favorite.departure = ticket.departure;
@@ -74,21 +90,29 @@
     favorite.from = ticket.from;
     favorite.to = ticket.to;
     favorite.created = [NSDate date];
-    [self save];
+    [self saveContext];
 }
 
 - (void)removeFromFavorite:(Ticket *)ticket {
     FavoriteTicket *favorite = [self favoriteFromTicket:ticket];
     if (favorite) {
-        [self.managedObjectContext deleteObject:favorite];
-        [self save];
+        [self.persistentContainer.viewContext deleteObject:favorite];
+        [self saveContext];
     }
 }
 
 - (NSArray *)favorites {
+    NSError *error;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO]];
-    return [self.managedObjectContext executeFetchRequest:request error:nil];
+    request.sortDescriptors = @[
+        [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO]
+    ];
+    
+    NSArray *tickets = [self.persistentContainer.viewContext executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"Error: %@", error.localizedDescription);
+    }
+    return tickets;
 }
 
 #pragma mark - FavoriteMapPrice
@@ -98,14 +122,23 @@
 }
 
 - (FavoriteMapPrice *)favoriteFromMapPrice:(MapPrice *)mapPrice {
+    NSError *error;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteMapPrice"];
-    request.predicate = [NSPredicate predicateWithFormat:@"destinationName == %@ AND destinationCode == %@ AND originName == %@ AND originCode == %@ AND departure == %@ AND returnDate == %@ AND numberOfChanges == %ld AND value == %ld AND distance == %ld", mapPrice.destination.name, mapPrice.destination.code, mapPrice.origin.name, mapPrice.origin.code, mapPrice.departure, mapPrice.returnDate, (long)mapPrice.numberOfChanges, (long)mapPrice.value, (long)mapPrice.distance];
     
-    return [[self.managedObjectContext executeFetchRequest:request error:nil] firstObject];
+    NSString *format = @"destinationName == %@ AND destinationCode == %@ AND originName == %@ AND originCode == %@ AND departure == %@ AND returnDate == %@ AND numberOfChanges == %ld AND value == %ld AND distance == %ld";
+    request.predicate = [NSPredicate predicateWithFormat:format, mapPrice.destination.name, mapPrice.destination.code, mapPrice.origin.name, mapPrice.origin.code, mapPrice.departure, mapPrice.returnDate, (long)mapPrice.numberOfChanges, (long)mapPrice.value, (long)mapPrice.distance];
+    NSArray *tickets = [self.persistentContainer.viewContext executeFetchRequest:request error:&error];
+    
+    if (error) {
+        NSLog(@"Error: %@", error.localizedDescription);
+        return nil;
+    }
+    
+    return tickets.firstObject;
 }
 
 - (void)addToFavoriteMapPrice:(MapPrice *)mapPrice {
-    FavoriteMapPrice *favorite = [NSEntityDescription insertNewObjectForEntityForName:@"FavoriteMapPrice" inManagedObjectContext:self.managedObjectContext];
+    FavoriteMapPrice *favorite = [NSEntityDescription insertNewObjectForEntityForName:@"FavoriteMapPrice" inManagedObjectContext:self.persistentContainer.viewContext];
     favorite.destinationName = mapPrice.destination.name;
     favorite.destinationCode = mapPrice.destination.code;
     favorite.originName = mapPrice.origin.name;
@@ -116,21 +149,27 @@
     favorite.value = mapPrice.value;
     favorite.distance = mapPrice.distance;
     favorite.actual = mapPrice.actual;
-    [self save];
+    [self saveContext];
 }
 
 - (void)removeFromFavoriteMapPrice:(MapPrice *)mapPrice {
     FavoriteMapPrice *favoritePrice = [self favoriteFromMapPrice:mapPrice];
     if (favoritePrice) {
-        [self.managedObjectContext deleteObject:favoritePrice];
-        [self save];
+        [self.persistentContainer.viewContext deleteObject:favoritePrice];
+        [self saveContext];
     }
 }
 
 - (NSArray *)favoriteMapPrices {
+    NSError *error;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteMapPrice"];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"departure" ascending:NO]];
-    return [self.managedObjectContext executeFetchRequest:request error:nil];
+    
+    NSArray *tickets = [self.persistentContainer.viewContext executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"Error: %@", error.localizedDescription);
+    }
+    return tickets;
 }
 
 @end
