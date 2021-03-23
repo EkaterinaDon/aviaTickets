@@ -10,6 +10,8 @@
 #import "DataManager.h"
 #import "PlaceViewController.h"
 #import "SearchRequest.h"
+#import "APIManager.h"
+#import "FeedsViewController.h"
 
 @interface ViewController : UIViewController
 

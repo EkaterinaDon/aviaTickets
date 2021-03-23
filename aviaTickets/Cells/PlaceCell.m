@@ -10,27 +10,17 @@
 @implementation PlaceCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    
     if (self) {
-        
         _labelName = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 0.0, ([UIScreen mainScreen].bounds.size.width - 2.0), 44.0)];
-        
         _labelName.textAlignment = NSTextAlignmentLeft;
-        
         [self.contentView addSubview:_labelName];
-        
-        
+                
         _labelCode = [[UILabel alloc] initWithFrame: CGRectMake(20, 0.0, ([UIScreen mainScreen].bounds.size.width - 2.0), 44.0)];
-        
         _labelCode.textAlignment = NSTextAlignmentCenter;
-        
         _labelCode.font = [UIFont systemFontOfSize: 16.0 weight:UIFontWeightLight];
-        
         [self.contentView addSubview:_labelCode];
-    }
-    
+    }    
     return self;
 }
 

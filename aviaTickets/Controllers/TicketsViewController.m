@@ -7,25 +7,46 @@
 
 #import "TicketsViewController.h"
 
-@interface TicketsViewController ()
+#define TicketCellReuseIdentifier @"TicketCellIdentifier"
 
+@interface TicketsViewController ()
+@property (nonatomic, strong) NSArray *tickets;
 @end
 
 @implementation TicketsViewController
 
+- (instancetype)initWithTickets:(NSArray *)tickets {
+    self = [super init];
+    if (self)
+    {
+        _tickets = tickets;
+        self.title = @"Билеты";
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self.tableView registerClass:[TicketTableViewCell class] forCellReuseIdentifier:TicketCellReuseIdentifier];
+    }
+    return self;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view setBackgroundColor: [UIColor redColor]];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - UITableViewDataSource & UITableViewDelegate
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _tickets.count;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TicketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellReuseIdentifier forIndexPath:indexPath];
+    cell.ticket = [_tickets objectAtIndex:indexPath.row];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 140.0;
+}
+
 
 @end
