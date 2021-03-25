@@ -11,6 +11,8 @@
 #import "PlaceViewController.h"
 #import "SearchRequest.h"
 #import "APIManager.h"
+#import "FirstViewController.h"
+#import "ProgressView.h"
 
 @interface ViewController : UIViewController
 

@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "TicketTableViewCell.h"
 #import "CoreDataHelper.h"
+#import "NotificationCenter.h"
 
 
 @interface TicketsViewController : UITableViewController

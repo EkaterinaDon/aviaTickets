@@ -61,7 +61,7 @@
     if (currentLocation) {
         self.origin = [[DataManager sharedInstance] cityForLocation:currentLocation];
         if (self.origin) {
-            [[APIManager sharedInstance] mapPricesFor:_origin withCompletion:^(NSArray *prices) {
+            [[APIManager sharedInstance] mapPricesFor:self.origin withCompletion:^(NSArray *prices) {
                 self.prices = prices;
             }];
         }
