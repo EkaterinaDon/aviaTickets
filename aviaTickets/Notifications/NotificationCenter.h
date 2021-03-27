@@ -9,6 +9,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <UIKit/UIKit.h>
 #import "TicketsViewController.h"
+#import "Ticket.h"
 
 typedef struct Notification {
     __unsafe_unretained NSString * _Nullable title;

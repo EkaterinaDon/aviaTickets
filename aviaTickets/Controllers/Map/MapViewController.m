@@ -85,11 +85,12 @@
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     [mapView deselectAnnotation:view.annotation animated:YES];
-    
+
     if ([view.annotation isKindOfClass:[MKUserLocation class]]) {
         return;
     }
     [self getMapPriceBy:view.annotation.title];
+    
 }
 
 

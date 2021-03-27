@@ -89,7 +89,12 @@ Notification NotificationMake(NSString* _Nullable title, NSString* _Nonnull body
            didReceiveNotificationResponse:(UNNotificationResponse *)response
          withCompletionHandler:(void (^)(void))completionHandler {
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadTheTable" object:nil userInfo:response.notification.request.content.userInfo];
+    NSDictionary *userInfo = response.notification.request.content.userInfo;
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadTheTable" object:nil userInfo:userInfo];
+    completionHandler();
+    
 }
 
 @end

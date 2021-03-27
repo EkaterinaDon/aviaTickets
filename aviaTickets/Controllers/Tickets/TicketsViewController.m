@@ -78,6 +78,7 @@
                 self.navigationItem.titleView = self.segmentedControl;
                 self.segmentedControl.selectedSegmentIndex = 0;
             }
+    [self configurePicker];
 }
 
 - (void)changeSource {
@@ -89,9 +90,10 @@
 #pragma mark - datePicker configuration
 
 - (void)configurePicker {
-    self.datePicker = [[UIDatePicker alloc] init];
+    self.datePicker = [UIDatePicker new];
     self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     self.datePicker.minimumDate = [NSDate date];
+    self.datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;  //UIDatePickerStyleInline
     
     self.dateTextField = [[UITextField alloc] initWithFrame:self.view.bounds];
     self.dateTextField.hidden = YES;
@@ -183,7 +185,9 @@
 }
 
 - (void)doneButtonDidTap:(UIBarButtonItem *)sender {
+    [self.dateTextField endEditing:YES];
     if (self.datePicker.date && notificationCell) {
+        
         NSString *message = [NSString stringWithFormat:@"%@ - %@ за %@ руб.", notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
         
         NSURL *imageURL;
@@ -207,15 +211,15 @@
         [formatter setDateFormat:@"dd MMMM yyyy в HH:mm"];
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Успешно" message:[NSString stringWithFormat:@"Уведомление будет отправлено - %@", self.datePicker.date] preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Закрыть" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Закрыть" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self.view endEditing:YES];
         }];
-        [alertController addAction:cancelAction];
+        [alertController addAction:okAction];
         [self presentViewController:alertController animated:YES completion:nil];
     }
     self.datePicker.date = [NSDate date];
     notificationCell = nil;
-    [self.view endEditing:YES];
+    //[self.view endEditing:YES];
 }
 
 

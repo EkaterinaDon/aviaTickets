@@ -157,6 +157,7 @@
 }
 
 - (void)reloadTable:(NSNotificationCenter *)sender {
+    
     TicketsViewController *ticketViewController = [[TicketsViewController alloc] initFavoriteTicketsController];
     [self presentViewController:ticketViewController animated:YES completion:nil];
 }
