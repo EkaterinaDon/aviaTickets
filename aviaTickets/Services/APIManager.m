@@ -14,6 +14,7 @@
 
 #define NEWS_TOKEN @"ffc7a92f9dd448daadb308832851af34"
 #define NEWS_API_URL @"https://newsapi.org/v2/top-headlines"
+#define API_URL_MAP_PRICE @"https://map.aviasales.ru/prices.json?origin_iata="
 
 @implementation APIManager
 
@@ -85,6 +86,26 @@ NSString * SearchRequestQuery(SearchRequest request) {
         result = [NSString stringWithFormat:@"%@&depart_date=%@&return_date=%@", result, [dateFormatter stringFromDate:request.departDate], [dateFormatter stringFromDate:request.returnDate]];
     }
     return result;
+}
+
+- (void)mapPricesFor:(City *)origin withCompletion:(void (^)(NSArray *prices))completion {
+    static BOOL isLoading;
+    if (isLoading) { return; }
+    isLoading = YES;
+    [self load:[NSString stringWithFormat:@"%@%@", API_URL_MAP_PRICE, origin.code] withCompletion:^(id  _Nullable result) {
+        NSArray *array = result;
+        NSMutableArray *prices = [NSMutableArray new];
+        if (array) {
+            for (NSDictionary *mapPriceDictionary in array) {
+                MapPrice *mapPrice = [[MapPrice alloc] initWithDictionary:mapPriceDictionary withOrigin:origin];
+                [prices addObject:mapPrice];
+            }
+            isLoading = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(prices);
+            });
+        }
+    }];
 }
 
 - (void)feedsWithRequest:(NSString*)searchString withCompletion:(void (^)(NSArray *feeds))completion {

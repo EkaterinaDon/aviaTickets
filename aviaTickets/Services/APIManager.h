@@ -10,6 +10,7 @@
 #import "SearchRequest.h"
 #import "Ticket.h"
 #import "Feed.h"
+#import "MapPrice.h"
 
 #define AirlineLogo(iata) [NSURL URLWithString:[NSString stringWithFormat:@"https://pics.avs.io/200/200/%@.png", iata]];
 
@@ -18,6 +19,7 @@
 + (instancetype)sharedInstance;
 - (void)cityForCurrentIP:(void (^)(City *city))completion;
 - (void)ticketsWithRequest:(SearchRequest)request withCompletion:(void (^)(NSArray *tickets))completion;
+- (void)mapPricesFor:(City *)origin withCompletion:(void (^)(NSArray *prices))completion;
 - (void)feedsWithRequest:(NSString*)searchString withCompletion:(void (^)(NSArray *feeds))completion;
 
 @end
