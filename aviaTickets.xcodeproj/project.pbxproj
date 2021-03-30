@@ -33,6 +33,8 @@
 		C461CC2525F9043400487B12 /* FeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C461CC2425F9043400487B12 /* FeedTableViewCell.m */; };
 		C461CC2925F9070600487B12 /* FeedsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C461CC2825F9070600487B12 /* FeedsViewController.m */; };
 		C461CC2E25F9075400487B12 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C461CC2D25F9075400487B12 /* FeedViewController.m */; };
+		C488ADBF2600D345002A1E83 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = C488ADBE2600D345002A1E83 /* TabBarController.m */; };
+		C488ADC32600FC50002A1E83 /* PlaceCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C488ADC22600FC50002A1E83 /* PlaceCollectionCell.m */; };
 		DD4D3850F8F0501786E6A9EE /* Pods_aviaTickets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D54B136D28D41E1CC2DDE1 /* Pods_aviaTickets.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +90,10 @@
 		C461CC2825F9070600487B12 /* FeedsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedsViewController.m; sourceTree = "<group>"; };
 		C461CC2C25F9075300487B12 /* FeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
 		C461CC2D25F9075400487B12 /* FeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedViewController.m; sourceTree = "<group>"; };
+		C488ADBD2600D345002A1E83 /* TabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
+		C488ADBE2600D345002A1E83 /* TabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
+		C488ADC12600FC50002A1E83 /* PlaceCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceCollectionCell.h; sourceTree = "<group>"; };
+		C488ADC22600FC50002A1E83 /* PlaceCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceCollectionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,12 +119,10 @@
 		C458CDE625F5086E004D9A5A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C458CDE725F508E2004D9A5A /* PlaceCell.h */,
-				C461CC2325F9043400487B12 /* FeedTableViewCell.h */,
-				C461CC2425F9043400487B12 /* FeedTableViewCell.m */,
-				C461CC1725F8FADC00487B12 /* TicketTableViewCell.h */,
-				C461CC1825F8FADC00487B12 /* TicketTableViewCell.m */,
-				C458CDE825F508E2004D9A5A /* PlaceCell.m */,
+				C488ADC52600FE19002A1E83 /* PlaceTableViewCell */,
+				C488ADC72600FE35002A1E83 /* FeedTableViewCell */,
+				C488ADC92600FE48002A1E83 /* PlaceCollectionViewCell */,
+				C488ADCA2600FE59002A1E83 /* TicketsTableViewCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -127,6 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				C45927E825EFD54600CFE731 /* AppDelegate.h */,
+				C488ADBD2600D345002A1E83 /* TabBarController.h */,
+				C488ADBE2600D345002A1E83 /* TabBarController.m */,
 				C45927E925EFD54600CFE731 /* AppDelegate.m */,
 			);
 			path = App;
@@ -270,6 +276,42 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		C488ADC52600FE19002A1E83 /* PlaceTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C458CDE725F508E2004D9A5A /* PlaceCell.h */,
+				C458CDE825F508E2004D9A5A /* PlaceCell.m */,
+			);
+			path = PlaceTableViewCell;
+			sourceTree = "<group>";
+		};
+		C488ADC72600FE35002A1E83 /* FeedTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C461CC2325F9043400487B12 /* FeedTableViewCell.h */,
+				C461CC2425F9043400487B12 /* FeedTableViewCell.m */,
+			);
+			path = FeedTableViewCell;
+			sourceTree = "<group>";
+		};
+		C488ADC92600FE48002A1E83 /* PlaceCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C488ADC12600FC50002A1E83 /* PlaceCollectionCell.h */,
+				C488ADC22600FC50002A1E83 /* PlaceCollectionCell.m */,
+			);
+			path = PlaceCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		C488ADCA2600FE59002A1E83 /* TicketsTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C461CC1725F8FADC00487B12 /* TicketTableViewCell.h */,
+				C461CC1825F8FADC00487B12 /* TicketTableViewCell.m */,
+			);
+			path = TicketsTableViewCell;
+			sourceTree = "<group>";
+		};
 		C69BD80235AAF515C01849DD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +441,7 @@
 				C461CC1D25F9020D00487B12 /* Feed.m in Sources */,
 				C45927FE25EFD54800CFE731 /* main.m in Sources */,
 				C459280A25EFFD6300CFE731 /* TicketsViewController.m in Sources */,
+				C488ADBF2600D345002A1E83 /* TabBarController.m in Sources */,
 				C458CDE925F508E2004D9A5A /* PlaceCell.m in Sources */,
 				C43FD45725FE6E0600BBAFA1 /* MapViewController.m in Sources */,
 				C458CDE225F500D2004D9A5A /* PlaceViewController.m in Sources */,
@@ -415,6 +458,7 @@
 				C45927EA25EFD54600CFE731 /* AppDelegate.m in Sources */,
 				C461CC2E25F9075400487B12 /* FeedViewController.m in Sources */,
 				C461CC1925F8FADC00487B12 /* TicketTableViewCell.m in Sources */,
+				C488ADC32600FC50002A1E83 /* PlaceCollectionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

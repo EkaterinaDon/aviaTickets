@@ -9,9 +9,9 @@
 #import "DataManager.h"
 #import "City.h"
 #import "Airport.h"
-#import "PlaceCell.h"
+//#import "PlaceCell.h"
+#import "PlaceCollectionCell.h"
 
-NS_ASSUME_NONNULL_BEGIN
 
 typedef enum PlaceType {
     PlaceTypeArrival,
@@ -22,11 +22,10 @@ typedef enum PlaceType {
 - (void)selectPlace:(id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType;
 @end
 
-@interface PlaceViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PlaceViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource> ///<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) id<PlaceViewControllerDelegate>delegate;
 - (instancetype)initWithType:(PlaceType)type;
 
 @end
 
-NS_ASSUME_NONNULL_END

@@ -19,8 +19,6 @@
 
 @property (nonatomic, strong) UIBarButtonItem *feedsButton;
 
-@property (nonatomic, strong) UIButton *mapButton;
-
 @property (nonatomic) SearchRequest searchRequest;
 
 @end
@@ -43,11 +41,8 @@
 - (void) configureView {
     
     self.view.backgroundColor = [UIColor whiteColor];
-    
     self.navigationController.navigationBar.prefersLargeTitles = YES;
-    
-    self.title = @"Поиск";
-    
+    self.title = @"Поиск";    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataComplete) name:kDataManagerLoadDataDidComplete object:nil];
 }
 
@@ -93,23 +88,6 @@
     [self.searchButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.searchButton];
     
-    self.mapButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.mapButton setTitle:@"Найти на карте" forState:UIControlStateNormal];
-    self.mapButton.tintColor = [UIColor whiteColor];
-    self.mapButton.frame = CGRectMake(30.0, CGRectGetMaxY(self.searchButton.frame) + 30, [UIScreen mainScreen].bounds.size.width - 60.0, 60.0);
-    self.mapButton.backgroundColor = [UIColor blackColor];
-    self.mapButton.layer.cornerRadius = 8.0;
-    self.mapButton.titleLabel.font = [UIFont systemFontOfSize:20.0 weight:UIFontWeightBold];
-    [self.mapButton addTarget:self action:@selector(mapButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.mapButton];
-        
-    self.feedsButton = [[UIBarButtonItem alloc]
-                    initWithTitle: @"Новости"
-                    style: UIBarButtonItemStylePlain
-                    target: self
-                    action: @selector(feedsButtonDidTap:)];
-    
-    self.navigationItem.rightBarButtonItem = self.feedsButton;
 }
 
 #pragma mark - Metods
@@ -134,25 +112,6 @@
         }
         else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Увы!" message:@"По данному направлению билетов не найдено" preferredStyle: UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:@"Закрыть" style:(UIAlertActionStyleDefault) handler:nil]];
-            [self presentViewController:alertController animated:YES completion:nil];
-        }
-    }];
-}
-
--(void)mapButtonDidTap:(UIButton *)sender {
-    MapViewController *mapViewController = [MapViewController new];
-    [self.navigationController showViewController:mapViewController sender:self];
-}
-
-- (void)feedsButtonDidTap:(UIButton *)sender {
-    [[APIManager sharedInstance] feedsWithRequest: @"ru" withCompletion: ^(NSArray *feeds) {//bbc-news
-        if (feeds.count > 0) {
-            FeedsViewController *feedsViewController = [[FeedsViewController alloc] initWithFeeds: feeds];
-            [self.navigationController showViewController:feedsViewController sender:self];
-        }
-        else {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Увы!" message:@"Не получилось найти новости или ошибка реализации" preferredStyle: UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:@"Закрыть" style:(UIAlertActionStyleDefault) handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
         }

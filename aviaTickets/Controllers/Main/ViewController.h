@@ -11,8 +11,6 @@
 #import "PlaceViewController.h"
 #import "SearchRequest.h"
 #import "APIManager.h"
-#import "FeedsViewController.h"
-#import "MapViewController.h"
 
 @interface ViewController : UIViewController
 

@@ -8,13 +8,13 @@
 #import <UIKit/UIKit.h>
 #import "FeedViewController.h"
 #import "FeedTableViewCell.h"
+#import "APIManager.h"
 
 
 
 @interface FeedsViewController : UITableViewController
 
 @property (nonatomic, strong) NSArray *feeds;
-- (instancetype)initWithFeeds:(NSArray *)feeds;
 
 @end
 

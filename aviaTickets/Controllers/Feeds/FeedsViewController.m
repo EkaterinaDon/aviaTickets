@@ -15,20 +15,24 @@
 
 @implementation FeedsViewController
 
-- (instancetype)initWithFeeds:(NSArray *)feeds {
-    self = [super init];
-    if (self) {
-        _feeds = feeds;
-        self.title = @" Новости";
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self.tableView registerClass:[FeedTableViewCell class] forCellReuseIdentifier:FeedCellReuseIdentifier];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[FeedTableViewCell class] forCellReuseIdentifier:FeedCellReuseIdentifier];
+    
+    self.title = @"Новости";
+    
+    [[APIManager sharedInstance] feedsWithRequest: @"ru" withCompletion: ^(NSArray *feeds) {
+            if (feeds.count > 0) {
+                self.feeds = feeds;
+                [self.tableView reloadData];
+            }
+            else {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Увы!" message:@"Не получилось найти новости или ошибка реализации" preferredStyle: UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:@"Закрыть" style:(UIAlertActionStyleDefault) handler:nil]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }
+        }];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
