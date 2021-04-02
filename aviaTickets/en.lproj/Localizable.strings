@@ -1,0 +1,64 @@
+/* 
+  Localizable.strings
+  aviaTickets
+
+  Created by Ekaterina on 2.04.21.
+  
+*/
+
+
+//TabBarController
+"searchTab" = "Search";
+"mapTab" = "Price map";
+"favoritesTab" = "Favorites";
+"newsTab" = "News";
+
+//FirstViewController
+"about" = "About App";
+"ticketsHeader" = "Tickets";
+"mapPriceHeader" = "Prices on the map";
+"favoriteHeader" = "Favorite tickets";
+
+"aboutAppDescription" = "Airline search application";
+"ticketsDescription" = "Find flights";
+"mapPriceDescription" = "View prices on the map";
+"favoriteDescription" = "Save selected tickets";
+
+"nextButton" = "Next";
+"doneButton" = "Done";
+
+//ViewController
+"from" = "From";
+"to" = "To";
+
+//MapViewController
+"mapTitle" = "Price map";
+
+//PlaceViewController
+"placeCities" = "Cities";
+"placeAirports" = "Airports";
+
+//TicketsViewController
+"ticketsTitle" = "Tickets";
+"ticketsFromMap" = "From map";
+"addToFavorites" = "Add to favorites";
+"removeFromFavorites" = "Remove from favorites";
+"remindMe" = "Remind me";
+"ticketReminder" = "Ticket reminder";
+"notificationWillSent" = "Notification'll be sent";
+"success" = "Success";
+
+"reminderTextForFavoriteTicket" = "%@ - %@ for %lld ₽";
+"reminderTextForFoundTicket" = "%@ - %@ for %@ ₽";
+
+//Alerts
+"whoopsTitle" = "Whoops!";
+"error" = "Error";
+"ticketsNotFound" = "No tickets was found for this destination";
+"close" = "Close";
+"notSetPlace" = "You have to specify the place od departure and the place of arrival";
+"actionsWithTickets" = "Actions with tickets";
+"actionsWithTicketsDescription" = "What needs to be done with the selected ticket?";
+"notDetermineCurrentCity" = "Could not determine current city!";
+"noLocationServicesPermissionsMessage" = "We don't have permissions to detect your location";
+"reminderSetMessage" = "You will receive a notification %@";

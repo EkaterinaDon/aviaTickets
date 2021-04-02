@@ -10,6 +10,7 @@
 #import "City.h"
 #import "Airport.h"
 #import "PlaceCell.h"
+#import "NSString+Localization.h"
 
 typedef enum PlaceType {
     PlaceTypeArrival,

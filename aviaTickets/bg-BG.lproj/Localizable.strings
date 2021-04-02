@@ -1,0 +1,64 @@
+/* 
+  Localizable.strings
+  aviaTickets
+
+  Created by Ekaterina on 2.04.21.
+  
+*/
+
+
+//TabBarController
+"searchTab" = "Търсене";
+"mapTab" = "Карта на цени";
+"favoritesTab" = "Любими";
+"newsTab" = "Новини";
+
+//FirstViewController
+"about" = "Относно приложението";
+"ticketsHeader" = "Билеты";
+"mapPriceHeader" = "Карта на цени";
+"favoriteHeader" = "Любимите билети";
+
+"aboutAppDescription" = "Приложението за търсене на аеро карти";
+"ticketsDescription" = "Търсите по името или код на аерогара";
+"mapPriceDescription" = "Гледайте цените на картата";
+"favoriteDescription" = "Запазвайте любимите билети";
+
+"nextButton" = "Далее";
+"doneButton" = "Готово";
+
+//ViewController
+"from" = "Заминаване";
+"to" = "Пристигане";
+
+//MapViewController
+"mapTitle" = "Карта на цените";
+
+//PlaceViewController
+"placeCities" = "Град";
+"placeAirports" = "Аерогара";
+
+//TicketsViewController
+"ticketsTitle" = "Билети";
+"ticketsFromMap" = "От картата";
+"addToFavorites" = "Запази любимите";
+"removeFromFavorites" = "Изтрий от любимите";
+"remindMe" = "Напомни";
+"ticketReminder" = "Напомняне за билет";
+"notificationWillSent" = "Известието ще бъде изпратено";
+"success" = "Успех!";
+
+"reminderTextForFavoriteTicket" = "%@ - %@ за %lld ₽";
+"reminderTextForFoundTicket" = "%@ - %@ за %@ ₽";
+
+//Alerts
+"error" = "Грешка";
+"whoopsTitle" = "Упс!";
+"ticketsNotFound" = "За тази дестинация няма билети";
+"close" = "Затвори";
+"notSetPlace" = "Трябва да изберете град или аерогара";
+"actionsWithTickets" = "Действията с билет";
+"actionsWithTicketsDescription" = "Какво трябва да направим с билетът?";
+"notDetermineCurrentCity" = "Не мога да намира мястоположението!";
+"noLocationServicesPermissionsMessage" = "Вие забранили да следим мястоположението";
+"reminderSetMessage" = "Напомня след %@";

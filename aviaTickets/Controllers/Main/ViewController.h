@@ -13,6 +13,7 @@
 #import "APIManager.h"
 #import "FirstViewController.h"
 #import "ProgressView.h"
+#import "NSString+Localization.h"
 
 @interface ViewController : UIViewController
 

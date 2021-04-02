@@ -30,7 +30,7 @@
         isTickets = YES;
         self.tickets = [NSArray new];
         self.prices = [NSArray new];
-        self.title = @"Избранное";
+        self.title = @"favoritesTab".localize;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.tableView registerClass:[TicketTableViewCell class] forCellReuseIdentifier:TicketCellReuseIdentifier];
     }
@@ -44,7 +44,7 @@
         isFavorites = NO;
         isTickets = YES;
         self.tickets = tickets;
-        self.title = @"Билеты";
+        self.title = @"ticketsTitle".localize;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self.tableView registerClass:[TicketTableViewCell class] forCellReuseIdentifier:TicketCellReuseIdentifier];
         [self configurePicker];
@@ -70,9 +70,9 @@
                 self.navigationController.navigationBar.prefersLargeTitles = YES;
                 self.navigationController.navigationBar.translucent = NO;
                 
-                self.title = @"Избранное";
+                self.title = @"favoritesTab".localize;
                                 
-                self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Сохраненные билеты", @"Сохраненные из карты"]];
+                self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"ticketsTitle".localize, @"ticketsFromMap".localize]];
                 [self.segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
                 self.segmentedControl.tintColor = [UIColor blackColor];
                 self.navigationItem.titleView = self.segmentedControl;
@@ -93,7 +93,7 @@
     self.datePicker = [UIDatePicker new];
     self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     self.datePicker.minimumDate = [NSDate date];
-    self.datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;  //UIDatePickerStyleInline
+    self.datePicker.preferredDatePickerStyle = UIDatePickerStyleWheels;  
     
     self.dateTextField = [[UITextField alloc] initWithFrame:self.view.bounds];
     self.dateTextField.hidden = YES;
@@ -138,24 +138,24 @@
     [self.view endEditing:YES];
     
     if (isFavorites) return;
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Действия с билетом" message:@"Сохранить выбранный билет?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"actionsWithTickets".localize message:@"actionsWithTicketsDescription".localize preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *favoriteAction;
     if ([[CoreDataHelper sharedInstance] isFavorite: [self.tickets objectAtIndex:indexPath.row]]) {
-        favoriteAction = [UIAlertAction actionWithTitle:@"Удалить из избранного" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        favoriteAction = [UIAlertAction actionWithTitle:@"removeFromFavorites".localize style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             [[CoreDataHelper sharedInstance] removeFromFavorite:[self->_tickets objectAtIndex:indexPath.row]];
         }];
     } else {
-        favoriteAction = [UIAlertAction actionWithTitle:@"Добавить в избранное" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        favoriteAction = [UIAlertAction actionWithTitle:@"addToFavorites".localize style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[CoreDataHelper sharedInstance] addToFavorite:[self->_tickets objectAtIndex:indexPath.row]];
         }];
     }
     
-    UIAlertAction *notificationAction = [UIAlertAction actionWithTitle:@"Напомнить" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *notificationAction = [UIAlertAction actionWithTitle:@"remindMe".localize style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self->notificationCell = [tableView cellForRowAtIndexPath:indexPath];
         [self->_dateTextField becomeFirstResponder];
         }];
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Закрыть" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"close".localize style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:favoriteAction];
     [alertController addAction:notificationAction];
     [alertController addAction:cancelAction];
@@ -188,7 +188,7 @@
     [self.dateTextField endEditing:YES];
     if (self.datePicker.date && notificationCell) {
         
-        NSString *message = [NSString stringWithFormat:@"%@ - %@ за %@ руб.", notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
+        NSString *message = [NSString stringWithFormat:@"reminderTextForFoundTicket".localize, notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
         
         NSURL *imageURL;
         if (notificationCell.airlineLogoView.image) {
@@ -202,7 +202,7 @@
             imageURL = [NSURL fileURLWithPath:path];
         }
         
-        Notification notification = NotificationMake(@"Напоминание о билете", message, self.datePicker.date, imageURL);
+        Notification notification = NotificationMake(@"ticketReminder".localize, message, self.datePicker.date, imageURL);
         [[NotificationCenter sharedInstance] sendNotification:notification];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -210,8 +210,8 @@
         [formatter setLocale:ruLocale];
         [formatter setDateFormat:@"dd MMMM yyyy в HH:mm"];
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Успешно" message:[NSString stringWithFormat:@"Уведомление будет отправлено - %@", self.datePicker.date] preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Закрыть" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"success".localize message:[NSString stringWithFormat:@"reminderSetMessage".localize, self.datePicker.date] preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"close".localize style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self.view endEditing:YES];
         }];
         [alertController addAction:okAction];
@@ -219,7 +219,6 @@
     }
     self.datePicker.date = [NSDate date];
     notificationCell = nil;
-    //[self.view endEditing:YES];
 }
 
 

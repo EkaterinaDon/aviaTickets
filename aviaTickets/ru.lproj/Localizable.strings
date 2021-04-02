@@ -1,0 +1,64 @@
+/* 
+  Localizable.strings
+  aviaTickets
+
+  Created by Ekaterina on 2.04.21.
+  
+*/
+
+
+//TabBarController
+"searchTab" = "Поиск";
+"mapTab" = "Карта цен";
+"favoritesTab" = "Избранное";
+"newsTab" = "Новости";
+
+//FirstViewController
+"about" = "О приложении";
+"ticketsHeader" = "Билеты";
+"mapPriceHeader" = "Карта цен";
+"favoriteHeader" = "Сохраненные билеты";
+
+"aboutAppDescription" = "Приложение для поиска авиабилетов";
+"ticketsDescription" = "Ищите по названию города или по коду аэропорта";
+"mapPriceDescription" = "Смотрите цены на карте";
+"favoriteDescription" = "Сохраняйте выбранные билеты";
+
+"nextButton" = "Далее";
+"doneButton" = "Готово";
+
+//ViewController
+"from" = "Откуда";
+"to" = "Куда";
+
+//MapViewController
+"mapTitle" = "Карта цен";
+
+//PlaceViewController
+"placeCities" = "Города";
+"placeAirports" = "Аэропорты";
+
+//TicketsViewController
+"ticketsTitle" = "Билеты";
+"ticketsFromMap" = "Из карты цен";
+"addToFavorites" = "Добавить в избранные";
+"removeFromFavorites" = "Удалить из избранных";
+"remindMe" = "Напомнить";
+"ticketReminder" = "Напоминание о билете";
+"notificationWillSent" = "Уведомление будет отправлено";
+"success" = "Успешно!";
+
+"reminderTextForFavoriteTicket" = "%@ - %@ за %lld ₽";
+"reminderTextForFoundTicket" = "%@ - %@ за %@ ₽";
+
+//Alerts
+"error" = "Ошибка";
+"whoopsTitle" = "Упс!";
+"ticketsNotFound" = "Для этого направления билетов не найдено";
+"close" = "Закрыть";
+"notSetPlace" = "Вы должны выбрать город или аэропорт отправления и прибытия";
+"actionsWithTickets" = "Действия с билетом";
+"actionsWithTicketsDescription" = "Что необходимо сделать с билетом?";
+"notDetermineCurrentCity" = "Не могу определить местоположение!";
+"noLocationServicesPermissionsMessage" = "Вы запретили нам отслеживать местоположение";
+"reminderSetMessage" = "Напоминание сработает %@";

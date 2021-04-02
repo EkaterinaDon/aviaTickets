@@ -9,6 +9,7 @@
 #import <MapKit/MapKit.h>
 #import "DataManager.h"
 #import "CoreDataHelper.h"
+#import "NSString+Localization.h"
 
 
 @interface MapViewController : UIViewController

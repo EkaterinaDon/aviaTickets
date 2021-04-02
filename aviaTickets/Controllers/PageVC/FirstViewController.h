@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "ContentViewController.h"
 #import "TabBarController.h"
+#import "NSString+Localization.h"
 
 
 @interface FirstViewController : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>

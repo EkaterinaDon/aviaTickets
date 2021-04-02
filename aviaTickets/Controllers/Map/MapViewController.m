@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Карта цен";
+    self.title = @"mapTitle".localize;
     
     self.mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.mapView.showsUserLocation = YES;
@@ -66,6 +66,21 @@
             }];
         }
     }
+    
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if ([placemarks count] > 0) {
+            for (MKPlacemark *placemark in placemarks) {
+                [self.mapView removeAnnotations: self.mapView.annotations];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                    annotation.title = [NSString stringWithFormat:@"%@", placemark.locality];
+                    [self->_mapView addAnnotation: annotation];
+                });
+            }
+        }
+    }];
+    
 }
 
 - (void)setPrices:(NSArray *)prices {
@@ -107,19 +122,19 @@
 }
 
 - (void) showAddToFavoriteAlert:(MapPrice *) mapPrice {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Действия с билетом" message:@"Что необходимо сделать с выбранным билетом?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"actionsWithTickets".localize message:@"actionsWithTicketsDescription".localize preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *favoriteAction;
     
     if ([[CoreDataHelper sharedInstance] isFavoriteMapPrice:mapPrice]) {
-        favoriteAction = [UIAlertAction actionWithTitle:@"Удалить из избранного" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        favoriteAction = [UIAlertAction actionWithTitle:@"removeFromFavorites".localize style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             [[CoreDataHelper sharedInstance] removeFromFavoriteMapPrice:mapPrice];
         }];
     } else {
-        favoriteAction = [UIAlertAction actionWithTitle:@"Добавить в избранное" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        favoriteAction = [UIAlertAction actionWithTitle:@"addToFavorites".localize style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[CoreDataHelper sharedInstance] addToFavoriteMapPrice:mapPrice];
         }];
     }
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Закрыть" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"close".localize style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:favoriteAction];
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];

@@ -45,7 +45,7 @@
     self.tableView.dataSource = self;
     [self.view addSubview: self.tableView];
     
-    self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Города", @"Аэропорты"]];
+    self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"placeCities".localize, @"placeAirports".localize]];
     [self.segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
     self.segmentedControl.tintColor = [UIColor blackColor];
     self.navigationItem.titleView = self.segmentedControl;
@@ -59,9 +59,9 @@
     self.navigationItem.searchController = self.searchController;
     
     if (self.placeType == PlaceTypeDeparture) {
-        self.title = @"Откуда";
+        self.title = @"from".localize;
     } else {
-        self.title = @"Куда";
+        self.title = @"to".localize;
     }
 }
 
