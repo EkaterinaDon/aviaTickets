@@ -61,7 +61,7 @@
     if (currentLocation) {
         self.origin = [[DataManager sharedInstance] cityForLocation:currentLocation];
         if (self.origin) {
-            [[APIManager sharedInstance] mapPricesFor:_origin withCompletion:^(NSArray *prices) {
+            [[APIManager sharedInstance] mapPricesFor:self.origin withCompletion:^(NSArray *prices) {
                 self.prices = prices;
             }];
         }
@@ -85,11 +85,12 @@
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     [mapView deselectAnnotation:view.annotation animated:YES];
-    
+
     if ([view.annotation isKindOfClass:[MKUserLocation class]]) {
         return;
     }
     [self getMapPriceBy:view.annotation.title];
+    
 }
 
 

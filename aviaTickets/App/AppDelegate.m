@@ -19,13 +19,14 @@
     CGRect windowFrame = [[UIScreen mainScreen] bounds];
     self.window = [[UIWindow alloc] initWithFrame: windowFrame];
     
-//    ViewController *viewController = [[ViewController alloc] init];
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController: viewController];
-    TabBarController *tabBarController = [[TabBarController alloc] init];
+    FirstViewController *firstViewController = [[FirstViewController alloc] init];
     
-    self.window.rootViewController = tabBarController;
+    self.window.rootViewController = firstViewController;
     [self.window makeKeyAndVisible];
+    
+    [[NotificationCenter sharedInstance] registerService];
     return YES;
 }
+
 
 @end
