@@ -22,17 +22,17 @@
         self.contentView.layer.cornerRadius = 6.0;
         self.contentView.backgroundColor = [UIColor whiteColor];
         
-        _labelName = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 80, 40)];
-        _labelName.textAlignment = NSTextAlignmentLeft;
-        _labelName.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightMedium];
-        _labelName.numberOfLines = 0;
-        [self.contentView addSubview:_labelName];
+        self.labelName = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 80, 40)];
+        self.labelName.textAlignment = NSTextAlignmentLeft;
+        self.labelName.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightMedium];
+        self.labelName.numberOfLines = 0;
+        [self.contentView addSubview:self.labelName];
         
         
-        _labelCode = [[UILabel alloc] initWithFrame: CGRectMake(5, 50, 80, 40)];
-        _labelCode.textAlignment = NSTextAlignmentLeft;
-        _labelCode.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightLight];
-        [self.contentView addSubview:_labelCode];
+        self.labelCode = [[UILabel alloc] initWithFrame: CGRectMake(5, 50, 80, 40)];
+        self.labelCode.textAlignment = NSTextAlignmentLeft;
+        self.labelCode.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightLight];
+        [self.contentView addSubview:self.labelCode];
     }
     
     return self;
